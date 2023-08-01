@@ -5,7 +5,7 @@ import UIKit
 
 class UserInfoCell: UICollectionViewCell {
     // TODO: Stack
-    private var nameTextFieldView = TextFieldView(text: "Имя", placeholder: "Укажите Ваше ФИО", type: .default)
+    var nameTextFieldView = TextFieldView(text: "Имя", placeholder: "Укажите Ваше ФИО", type: .default)
     private var ageTextFieldView = TextFieldView(text: "Возраст", placeholder: "Укажите Ваш возраст", type: .numberPad)
 
     override init(frame: CGRect) {
@@ -37,5 +37,10 @@ class UserInfoCell: UICollectionViewCell {
             $0.top.equalTo(nameTextFieldView.snp.bottom).offset(8)
             $0.leading.trailing.equalToSuperview().inset(16)
         }
+    }
+
+    func resetData() {
+        nameTextFieldView.textField.text?.removeAll()
+        ageTextFieldView.textField.text?.removeAll()
     }
 }

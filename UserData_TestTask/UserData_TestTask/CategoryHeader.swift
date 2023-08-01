@@ -3,8 +3,17 @@
 
 import UIKit
 
+// MARK: - AddButtonDelegate
+
+protocol AddButtonDelegate: AnyObject {
+    func addButtonPressed()
+}
+
+// MARK: - CategoryHeader
+
 class CategoryHeader: UICollectionReusableView {
     static let reuseIdentifier = "CategoryHeader"
+    var addButtonDelegate: AddButtonDelegate?
     private var categoryNameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16)
@@ -28,6 +37,7 @@ class CategoryHeader: UICollectionReusableView {
         setupStyle()
         addSubviews()
         makeConstraints()
+        setupTargets()
     }
 
     private func setupStyle() {
@@ -52,8 +62,21 @@ class CategoryHeader: UICollectionReusableView {
         }
     }
 
+    private func setupTargets() {
+        addButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
+    }
+
+    @objc
+    func addButtonPressed() {
+        addButtonDelegate?.addButtonPressed()
+    }
+
     func configure(title: String, isButtonHidden: Bool) {
         categoryNameLabel.text = title
         addButton.isHidden = isButtonHidden
+    }
+
+    func hideAddButton() {
+        addButton.isHidden = true
     }
 }

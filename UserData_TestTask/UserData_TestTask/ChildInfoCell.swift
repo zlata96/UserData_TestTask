@@ -3,10 +3,23 @@
 
 import UIKit
 
+// MARK: - DeleteButtonDelegate
+
+protocol DeleteButtonDelegate: AnyObject {
+    func deleteButtonPressed()
+}
+
+// MARK: - ChildInfoCell
+
 class ChildInfoCell: UICollectionViewCell {
+    var deleteButtonDelegate: DeleteButtonDelegate?
     // TODO: Stack
-    private var nameTextFieldView = TextFieldView(text: "Имя", placeholder: "Укажите имя ребенка", type: .default)
-    private var ageTextFieldView = TextFieldView(text: "Возраст", placeholder: "Укажите возраст ребенка", type: .numberPad)
+    private var nameTextFieldView = TextFieldView(text: "Имя",
+                                                  placeholder: "Укажите имя ребенка",
+                                                  type: .default)
+    private var ageTextFieldView = TextFieldView(text: "Возраст",
+                                                 placeholder: "Укажите возраст ребенка",
+                                                 type: .numberPad)
 
     private var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -38,6 +51,7 @@ class ChildInfoCell: UICollectionViewCell {
     private func commonInit() {
         addSubviews()
         makeConstraints()
+        setupTargets()
     }
 
     private func addSubviews() {
@@ -61,5 +75,19 @@ class ChildInfoCell: UICollectionViewCell {
             $0.height.equalTo(40)
             $0.width.equalTo(UIScreen.main.bounds.size.width / 2 - 32)
         }
+    }
+
+    private func setupTargets() {
+        deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
+    }
+
+    @objc
+    func deleteButtonPressed() {
+        deleteButtonDelegate?.deleteButtonPressed()
+    }
+
+    func resetData() {
+        nameTextFieldView.textField.text?.removeAll()
+        ageTextFieldView.textField.text?.removeAll()
     }
 }

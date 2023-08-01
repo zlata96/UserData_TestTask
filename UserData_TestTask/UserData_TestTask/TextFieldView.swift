@@ -4,20 +4,13 @@
 import UIKit
 
 class TextFieldView: UIView {
+    var onTextChanged: ((String) -> Void)?
     var text: String
     var placeholder: String
     var type: UIKeyboardType
 
-    lazy var label: UILabel = {
-        let label = UILabel()
-        label.text = text
-        label.textColor = .gray
-        label.font = .systemFont(ofSize: 12)
-        return label
-    }()
-
     lazy var textField: UITextField = {
-        let textField = UITextField()
+        var textField = UITextField()
         textField.font = .systemFont(ofSize: 14)
         textField.placeholder = placeholder
         textField.attributedPlaceholder = NSAttributedString(
@@ -27,6 +20,14 @@ class TextFieldView: UIView {
         textField.textColor = .black
         textField.keyboardType = type
         return textField
+    }()
+
+    lazy var label: UILabel = {
+        let label = UILabel()
+        label.text = text
+        label.textColor = .gray
+        label.font = .systemFont(ofSize: 12)
+        return label
     }()
 
     required init(text: String, placeholder: String, type: UIKeyboardType) {
@@ -46,6 +47,7 @@ class TextFieldView: UIView {
         setupStyle()
         addSubviews()
         makeConstraints()
+        textField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
     }
 
     private func setupStyle() {
@@ -71,5 +73,9 @@ class TextFieldView: UIView {
             make.bottom.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(8)
         }
+    }
+
+    @objc private func textFieldChanged(_ textField: UITextField) {
+        onTextChanged?(textField.text ?? "")
     }
 }

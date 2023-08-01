@@ -4,19 +4,16 @@
 import SnapKit
 import UIKit
 
-// MARK: - CategoriesSection
+// MARK: - ResetDataDelegate
 
-enum CategoriesSection {
-    case mainUser
-    case children
+protocol ResetDataDelegate {
+    func resetButtonPressed()
 }
 
 // MARK: - UserInfoView
 
 class UserInfoView: UIView {
-    let sections: [CategoriesSection] = [.mainUser, .children]
-    var collectionViewDataSource: UICollectionViewDiffableDataSource<CategoriesSection, AnyHashable>?
-
+    var resetDataDelegate: ResetDataDelegate?
     lazy var userInfoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -59,6 +56,7 @@ class UserInfoView: UIView {
         setupStyle()
         addSubviews()
         makeConstraints()
+        setupTargets()
     }
 
     private func setupStyle() {
@@ -83,5 +81,14 @@ class UserInfoView: UIView {
             $0.height.equalTo(48)
             $0.leading.trailing.equalToSuperview().inset(64)
         }
+    }
+
+    private func setupTargets() {
+        cleanButton.addTarget(self, action: #selector(resetButtonPressed), for: .touchUpInside)
+    }
+
+    @objc
+    func resetButtonPressed() {
+        resetDataDelegate?.resetButtonPressed()
     }
 }
