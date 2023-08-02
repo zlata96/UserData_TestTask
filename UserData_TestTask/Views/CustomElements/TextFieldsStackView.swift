@@ -6,7 +6,7 @@ import UIKit
 // MARK: - TextFieldsStackView
 
 class TextFieldsStackView: UIView {
-    private lazy var nameTextFieldView = TextFieldView(
+    lazy var nameTextFieldView = TextFieldView(
         text: "Имя",
         placeholder: "Укажите ",
         type: .default
