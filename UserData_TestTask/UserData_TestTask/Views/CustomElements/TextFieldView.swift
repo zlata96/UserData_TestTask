@@ -22,7 +22,7 @@ class TextFieldView: UIView {
         return textField
     }()
 
-    lazy var label: UILabel = {
+    private lazy var label: UILabel = {
         let label = UILabel()
         label.text = text
         label.textColor = .lightGray

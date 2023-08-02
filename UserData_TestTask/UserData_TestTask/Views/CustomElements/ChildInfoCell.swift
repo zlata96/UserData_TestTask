@@ -49,10 +49,14 @@ class ChildInfoCell: UICollectionViewCell {
     }
 
     private func commonInit() {
-        backgroundColor = .white
+        setupStyle()
         addSubviews()
         makeConstraints()
         setupTargets()
+    }
+
+    private func setupStyle() {
+        backgroundColor = .white
     }
 
     private func addSubviews() {
@@ -64,8 +68,7 @@ class ChildInfoCell: UICollectionViewCell {
 
     private func makeConstraints() {
         stackView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(16)
-            $0.leading.equalToSuperview().offset(16)
+            $0.top.bottom.leading.equalToSuperview().inset(16)
             $0.width.equalTo(UIScreen.main.bounds.size.width / 2)
             $0.height.equalTo(140)
         }
@@ -81,14 +84,16 @@ class ChildInfoCell: UICollectionViewCell {
     private func setupTargets() {
         deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
     }
+}
+
+extension ChildInfoCell {
+    func resetData() {
+        nameTextFieldView.textField.text?.removeAll()
+        ageTextFieldView.textField.text?.removeAll()
+    }
 
     @objc
     func deleteButtonPressed() {
         deleteButtonDelegate?.deleteButtonPressed()
-    }
-
-    func resetData() {
-        nameTextFieldView.textField.text?.removeAll()
-        ageTextFieldView.textField.text?.removeAll()
     }
 }

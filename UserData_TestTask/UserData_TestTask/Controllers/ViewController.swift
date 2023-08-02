@@ -24,10 +24,17 @@ class ViewController: UIViewController {
         hideKeyboardWhenTappedAround()
     }
 
-    func setupDelegates() {
+    private func setupDelegates() {
         contentView.userInfoCollectionView.dataSource = self
         contentView.userInfoCollectionView.delegate = self
         contentView.resetDataDelegate = self
+    }
+
+    private func updateCollectionViewConctraints() {
+        let height = contentView.userInfoCollectionView.contentSize
+        contentView.userInfoCollectionView.snp.updateConstraints {
+            $0.height.equalTo(height)
+        }
     }
 }
 
@@ -45,9 +52,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-    {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withClass: UserInfoCell.self, for: indexPath)
@@ -70,11 +78,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(
-            ofKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: CategoryHeader.reuseIdentifier,
+        let header = collectionView.viewForSupplementary(
+            withClass: CategoryHeader.self,
             for: indexPath
-        ) as? CategoryHeader else { fatalError("Cannot create the header") }
+        )
         header.addButtonDelegate = self
 
         switch indexPath.section {
@@ -83,13 +90,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         default: break
         }
         return header
-    }
-
-    private func updateCollectionViewConctraints() {
-        let height = contentView.userInfoCollectionView.contentSize
-        contentView.userInfoCollectionView.snp.updateConstraints {
-            $0.height.equalTo(height)
-        }
     }
 }
 
@@ -114,7 +114,10 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 
     private func hideButtonInHeader(isHidden: Bool) {
         let indexPath = IndexPath(row: 0, section: 1)
-        if let headerView = contentView.userInfoCollectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: indexPath) as? CategoryHeader {
+        if let headerView = contentView.userInfoCollectionView.supplementaryView(
+            forElementKind: UICollectionView.elementKindSectionHeader,
+            at: indexPath
+        ) as? CategoryHeader {
             headerView.hideAddButton(isHidden: isHidden)
         }
     }
@@ -180,17 +183,5 @@ extension ViewController: ResetDataDelegate {
             contentView.userInfoCollectionView.reloadData()
             updateCollectionViewConctraints()
         }
-    }
-}
-
-extension UIViewController {
-    func hideKeyboardWhenTappedAround() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
     }
 }

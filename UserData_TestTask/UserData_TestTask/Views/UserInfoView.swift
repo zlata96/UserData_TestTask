@@ -14,18 +14,6 @@ protocol ResetDataDelegate: AnyObject {
 
 class UserInfoView: UIView {
     var resetDataDelegate: ResetDataDelegate?
-    lazy var scrollView: UIScrollView = {
-        var scrollView = UIScrollView()
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
-        return scrollView
-    }()
-
-    lazy var customView: UIView = {
-        var view = UIView()
-        view.backgroundColor = .white
-        return view
-    }()
 
     lazy var userInfoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -37,9 +25,8 @@ class UserInfoView: UIView {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(
-            CategoryHeader.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: CategoryHeader.reuseIdentifier
+            viewWithClass: CategoryHeader.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader
         )
         collectionView.register(cellWithClass: UserInfoCell.self)
         collectionView.register(cellWithClass: ChildInfoCell.self)
@@ -47,12 +34,24 @@ class UserInfoView: UIView {
         return collectionView
     }()
 
-    lazy var cleanButton: UIButton = {
+    private lazy var scrollView: UIScrollView = {
+        var scrollView = UIScrollView()
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+
+    private lazy var customView: UIView = {
+        var view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+
+    private lazy var cleanButton: UIButton = {
         var button = UIButton()
         button.setTitle("Очистить", for: .normal)
         button.setTitleColor(.red, for: .normal)
         button.layer.cornerRadius = 24
-        // TODO: colors
         button.layer.borderColor = UIColor.red.cgColor
         button.layer.borderWidth = 2
         return button

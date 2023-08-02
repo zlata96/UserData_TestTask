@@ -4,7 +4,7 @@
 import UIKit
 
 class AddButton: UIButton {
-    let label: UILabel = {
+    private let label: UILabel = {
         let label = UILabel()
         label.text = "Добавить ребенка"
         label.textColor = .systemBlue
@@ -12,7 +12,7 @@ class AddButton: UIButton {
         return label
     }()
 
-    let plusImageView: UIImageView = {
+    private let plusImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "plus")
         imageView.tintColor = .systemBlue

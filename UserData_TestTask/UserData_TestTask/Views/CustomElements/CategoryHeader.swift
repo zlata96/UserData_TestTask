@@ -12,8 +12,8 @@ protocol AddButtonDelegate: AnyObject {
 // MARK: - CategoryHeader
 
 class CategoryHeader: UICollectionReusableView {
-    static let reuseIdentifier = "CategoryHeader"
     var addButtonDelegate: AddButtonDelegate?
+
     private var categoryNameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .semibold)
@@ -65,7 +65,9 @@ class CategoryHeader: UICollectionReusableView {
     private func setupTargets() {
         addButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
     }
+}
 
+extension CategoryHeader {
     @objc
     func addButtonPressed() {
         addButtonDelegate?.addButtonPressed()

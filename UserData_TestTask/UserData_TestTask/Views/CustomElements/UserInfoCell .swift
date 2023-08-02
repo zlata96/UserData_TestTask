@@ -3,9 +3,11 @@
 
 import UIKit
 
+// MARK: - UserInfoCell
+
 class UserInfoCell: UICollectionViewCell {
     // TODO: Stack
-    var nameTextFieldView = TextFieldView(text: "Имя", placeholder: "Укажите Ваше ФИО", type: .default)
+    private var nameTextFieldView = TextFieldView(text: "Имя", placeholder: "Укажите Ваше ФИО", type: .default)
     private var ageTextFieldView = TextFieldView(text: "Возраст", placeholder: "Укажите Ваш возраст", type: .numberPad)
 
     override init(frame: CGRect) {
@@ -19,9 +21,13 @@ class UserInfoCell: UICollectionViewCell {
     }
 
     private func commonInit() {
-        backgroundColor = .white
+        setupStyle()
         addSubviews()
         makeConstraints()
+    }
+
+    private func setupStyle() {
+        backgroundColor = .white
     }
 
     private func addSubviews() {
@@ -39,7 +45,9 @@ class UserInfoCell: UICollectionViewCell {
             $0.leading.trailing.equalToSuperview().inset(16)
         }
     }
+}
 
+extension UserInfoCell {
     func resetData() {
         nameTextFieldView.textField.text?.removeAll()
         ageTextFieldView.textField.text?.removeAll()
