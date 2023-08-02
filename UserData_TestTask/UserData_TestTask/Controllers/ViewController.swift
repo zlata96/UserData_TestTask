@@ -170,13 +170,16 @@ extension ViewController: ResetDataDelegate {
         let cell = contentView.userInfoCollectionView.cellForItem(at: indexPath) as? UserInfoCell
         cell?.resetData()
 
-        for index in 0 ... numberOfChild - 1 {
-            let indexPath = IndexPath(item: index, section: 1)
-            let cell = contentView.userInfoCollectionView.cellForItem(at: indexPath) as? ChildInfoCell
-            cell?.resetData()
+        if numberOfChild != 0 {
+            for index in 0 ... numberOfChild - 1 {
+                let indexPath = IndexPath(item: index, section: 1)
+                let cell = contentView.userInfoCollectionView.cellForItem(at: indexPath) as? ChildInfoCell
+                cell?.resetData()
+            }
+            numberOfChild = 1
+            contentView.userInfoCollectionView.reloadData()
+            updateCollectionViewConctraints()
         }
-        numberOfChild = 1
-        contentView.userInfoCollectionView.reloadData()
     }
 }
 
