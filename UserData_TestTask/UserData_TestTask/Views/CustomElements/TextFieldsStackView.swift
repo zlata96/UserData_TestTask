@@ -6,12 +6,17 @@ import UIKit
 // MARK: - TextFieldsStackView
 
 class TextFieldsStackView: UIView {
-    private lazy var nameTextFieldView = TextFieldView(text: "Имя",
-                                                       placeholder: "Укажите ",
-                                                       type: .default)
-    private lazy var ageTextFieldView = TextFieldView(text: "Возраст",
-                                                      placeholder: "Укажите ",
-                                                      type: .numberPad)
+    private lazy var nameTextFieldView = TextFieldView(
+        text: "Имя",
+        placeholder: "Укажите ",
+        type: .default
+    )
+
+    private lazy var ageTextFieldView = TextFieldView(
+        text: "Возраст",
+        placeholder: "Укажите ",
+        type: .numberPad
+    )
 
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()

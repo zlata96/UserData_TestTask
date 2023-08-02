@@ -7,13 +7,20 @@ import UIKit
 // MARK: - ViewController
 
 class ViewController: UIViewController {
+    enum Section: Int, CaseIterable {
+        case personalInfo = 0
+        case childrenInfo
+    }
+
     let contentView = UserInfoView()
-    var dataArray = [""]
+
     var numberOfChild = 1 {
         didSet {
+            // Ограничеваем максимальное кол-во до 5
             if numberOfChild > 5 {
                 numberOfChild = 5
             }
+            isButtonInHeaderHidden(numberOfChild == 5)
         }
     }
 
@@ -30,7 +37,7 @@ class ViewController: UIViewController {
         contentView.resetDataDelegate = self
     }
 
-    private func updateCollectionViewConctraints() {
+    private func updateCollectionViewConstraints() {
         let height = contentView.userInfoCollectionView.contentSize
         contentView.userInfoCollectionView.snp.updateConstraints {
             $0.height.equalTo(height)
@@ -42,13 +49,12 @@ class ViewController: UIViewController {
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
+        guard let sectionType = Section(rawValue: section) else { return 0 }
+        switch sectionType {
+        case .personalInfo:
             return 1
-        case 1:
+        case .childrenInfo:
             return numberOfChild
-        default:
-            return 0
         }
     }
 
@@ -56,26 +62,21 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        switch indexPath.section {
-        case 0:
+        guard let sectionType = Section(rawValue: indexPath.section) else { return UICollectionViewCell() }
+        switch sectionType {
+        case .personalInfo:
             let cell = collectionView.dequeueReusableCell(withClass: UserInfoCell.self, for: indexPath)
             return cell
-        case 1:
+        case .childrenInfo:
             let cell = collectionView.dequeueReusableCell(withClass: ChildInfoCell.self, for: indexPath)
             cell.deleteButtonDelegate = self
-            if numberOfChild == 1 {
-                cell.isSeparatorHidden(true)
-            } else {
-                cell.isSeparatorHidden(false)
-            }
+            cell.isSeparatorHidden(numberOfChild == 1)
             return cell
-        default:
-            return UICollectionViewCell()
         }
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
+        Section.allCases.count
     }
 
     func collectionView(
@@ -83,16 +84,18 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
+        guard let sectionType = Section(rawValue: indexPath.section) else { return UICollectionReusableView() }
         let header = collectionView.viewForSupplementary(
             withClass: CategoryHeader.self,
             for: indexPath
         )
         header.addButtonDelegate = self
 
-        switch indexPath.section {
-        case 0: header.configure(title: "Персональные данные", isButtonHidden: true)
-        case 1: header.configure(title: "Дети (макс. 5)", isButtonHidden: false)
-        default: break
+        switch sectionType {
+        case .personalInfo:
+            header.configure(title: "Персональные данные", isButtonHidden: true)
+        case .childrenInfo:
+            header.configure(title: "Дети (макс. 5)", isButtonHidden: false)
         }
         return header
     }
@@ -117,7 +120,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         CGSize(width: collectionView.frame.width, height: 160)
     }
 
-    private func hideButtonInHeader(isHidden: Bool) {
+    private func isButtonInHeaderHidden(_ isHidden: Bool) {
         let indexPath = IndexPath(row: 0, section: 1)
         if let headerView = contentView.userInfoCollectionView.supplementaryView(
             forElementKind: UICollectionView.elementKindSectionHeader,
@@ -134,10 +137,7 @@ extension ViewController: AddButtonDelegate {
     func addButtonPressed() {
         numberOfChild += 1
         contentView.userInfoCollectionView.insertItems(at: [IndexPath(row: numberOfChild - 1, section: 1)])
-        updateCollectionViewConctraints()
-        if numberOfChild == 5 {
-            hideButtonInHeader(isHidden: true)
-        }
+        updateCollectionViewConstraints()
     }
 }
 
@@ -145,14 +145,11 @@ extension ViewController: AddButtonDelegate {
 
 extension ViewController: DeleteButtonDelegate {
     func deleteButtonPressed() {
-        if numberOfChild != 0 {
+        if numberOfChild > 0 {
             let indexPath = IndexPath(row: numberOfChild - 1, section: 1)
             numberOfChild -= 1
             contentView.userInfoCollectionView.deleteItems(at: [indexPath])
-            updateCollectionViewConctraints()
-        }
-        if numberOfChild != 5 {
-            hideButtonInHeader(isHidden: false)
+            updateCollectionViewConstraints()
         }
     }
 }
@@ -179,6 +176,6 @@ extension ViewController: ResetDataDelegate {
 
         numberOfChild = 1
         contentView.userInfoCollectionView.reloadSections([1])
-        updateCollectionViewConctraints()
+        updateCollectionViewConstraints()
     }
 }
