@@ -13,22 +13,8 @@ protocol DeleteButtonDelegate: AnyObject {
 
 class ChildInfoCell: UICollectionViewCell {
     var deleteButtonDelegate: DeleteButtonDelegate?
-    // TODO: Stack
-    private var nameTextFieldView = TextFieldView(text: "Имя",
-                                                  placeholder: "Укажите имя ребенка",
-                                                  type: .default)
-    private var ageTextFieldView = TextFieldView(text: "Возраст",
-                                                 placeholder: "Укажите возраст ребенка",
-                                                 type: .numberPad)
 
-    private var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
-        stackView.alignment = .fill
-        stackView.spacing = 8
-        return stackView
-    }()
+    private lazy var childTextFieldsStackView = TextFieldsStackView()
 
     private var deleteButton: UIButton = {
         let button = UIButton()
@@ -56,18 +42,20 @@ class ChildInfoCell: UICollectionViewCell {
     }
 
     private func setupStyle() {
+        childTextFieldsStackView.configure(
+            namePlaceholder: "Укажите имя ребенка",
+            agePlaceholder: "Укажите возраст ребенка"
+        )
         backgroundColor = .white
     }
 
     private func addSubviews() {
-        stackView.addArrangedSubview(nameTextFieldView)
-        stackView.addArrangedSubview(ageTextFieldView)
-        addSubview(stackView)
+        addSubview(childTextFieldsStackView)
         addSubview(deleteButton)
     }
 
     private func makeConstraints() {
-        stackView.snp.makeConstraints {
+        childTextFieldsStackView.snp.makeConstraints {
             $0.top.bottom.leading.equalToSuperview().inset(16)
             $0.width.equalTo(UIScreen.main.bounds.size.width / 2)
             $0.height.equalTo(140)
@@ -75,7 +63,7 @@ class ChildInfoCell: UICollectionViewCell {
 
         deleteButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(16)
-            $0.leading.equalTo(stackView.snp.trailing).offset(8)
+            $0.leading.equalTo(childTextFieldsStackView.snp.trailing).offset(8)
             $0.height.equalTo(40)
             $0.width.equalTo(UIScreen.main.bounds.size.width / 2 - 32)
         }
@@ -88,8 +76,7 @@ class ChildInfoCell: UICollectionViewCell {
 
 extension ChildInfoCell {
     func resetData() {
-        nameTextFieldView.textField.text?.removeAll()
-        ageTextFieldView.textField.text?.removeAll()
+        childTextFieldsStackView.resetData()
     }
 
     @objc

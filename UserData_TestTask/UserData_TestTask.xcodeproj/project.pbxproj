@@ -20,6 +20,7 @@
 		CE083D512A74482100C68495 /* UserInfoCell .swift in Sources */ = {isa = PBXBuildFile; fileRef = CE083D502A74482100C68495 /* UserInfoCell .swift */; };
 		CE083D532A744B3600C68495 /* ChildInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE083D522A744B3600C68495 /* ChildInfoCell.swift */; };
 		CE994F5D2A7A82580019EA79 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE994F5C2A7A82580019EA79 /* UIViewController+Extension.swift */; };
+		CE994F5F2A7A86080019EA79 /* TextFieldsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE994F5E2A7A86080019EA79 /* TextFieldsStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		CE083D502A74482100C68495 /* UserInfoCell .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserInfoCell .swift"; sourceTree = "<group>"; };
 		CE083D522A744B3600C68495 /* ChildInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildInfoCell.swift; sourceTree = "<group>"; };
 		CE994F5C2A7A82580019EA79 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		CE994F5E2A7A86080019EA79 /* TextFieldsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldsStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				CE083D4A2A74409D00C68495 /* CategoryHeader.swift */,
 				CE083D522A744B3600C68495 /* ChildInfoCell.swift */,
 				CE083D4C2A74423900C68495 /* AddButton.swift */,
+				CE994F5E2A7A86080019EA79 /* TextFieldsStackView.swift */,
 			);
 			path = CustomElements;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				CE064CD22A7427A900BEDDB2 /* AppDelegate.swift in Sources */,
 				CE083D472A743EEF00C68495 /* TextFieldView.swift in Sources */,
 				CE083D4B2A74409D00C68495 /* CategoryHeader.swift in Sources */,
+				CE994F5F2A7A86080019EA79 /* TextFieldsStackView.swift in Sources */,
 				CE083D532A744B3600C68495 /* ChildInfoCell.swift in Sources */,
 				CE994F5D2A7A82580019EA79 /* UIViewController+Extension.swift in Sources */,
 				CE064CEA2A742C7900BEDDB2 /* UserInfoView.swift in Sources */,

@@ -6,9 +6,7 @@ import UIKit
 // MARK: - UserInfoCell
 
 class UserInfoCell: UICollectionViewCell {
-    // TODO: Stack
-    private var nameTextFieldView = TextFieldView(text: "Имя", placeholder: "Укажите Ваше ФИО", type: .default)
-    private var ageTextFieldView = TextFieldView(text: "Возраст", placeholder: "Укажите Ваш возраст", type: .numberPad)
+    private var userTextFieldStackView = TextFieldsStackView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,20 +26,26 @@ class UserInfoCell: UICollectionViewCell {
 
     private func setupStyle() {
         backgroundColor = .white
+        userTextFieldStackView.configure(namePlaceholder: "Укажите Ваше ФИО", agePlaceholder: "Укажите Ваш возраст")
     }
 
     private func addSubviews() {
-        addSubview(nameTextFieldView)
-        addSubview(ageTextFieldView)
+        addSubview(userTextFieldStackView)
+//        addSubview(nameTextFieldView)
+//        addSubview(ageTextFieldView)
     }
 
     private func makeConstraints() {
-        nameTextFieldView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(16)
-            $0.leading.trailing.equalToSuperview().inset(16)
-        }
-        ageTextFieldView.snp.makeConstraints {
-            $0.top.equalTo(nameTextFieldView.snp.bottom).offset(8)
+//        nameTextFieldView.snp.makeConstraints {
+//            $0.top.equalToSuperview().inset(16)
+//            $0.leading.trailing.equalToSuperview().inset(16)
+//        }
+//        ageTextFieldView.snp.makeConstraints {
+//            $0.top.equalTo(nameTextFieldView.snp.bottom).offset(8)
+//            $0.leading.trailing.equalToSuperview().inset(16)
+//        }
+        userTextFieldStackView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(16)
             $0.leading.trailing.equalToSuperview().inset(16)
         }
     }
@@ -49,7 +53,6 @@ class UserInfoCell: UICollectionViewCell {
 
 extension UserInfoCell {
     func resetData() {
-        nameTextFieldView.textField.text?.removeAll()
-        ageTextFieldView.textField.text?.removeAll()
+        userTextFieldStackView.resetData()
     }
 }
