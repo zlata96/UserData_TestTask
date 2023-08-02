@@ -7,7 +7,7 @@ class AddButton: UIButton {
     let label: UILabel = {
         let label = UILabel()
         label.text = "Добавить ребенка"
-        label.textColor = .blue
+        label.textColor = .systemBlue
         label.font = .systemFont(ofSize: 14)
         return label
     }()
@@ -15,7 +15,7 @@ class AddButton: UIButton {
     let plusImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "plus")
-        imageView.tintColor = .blue
+        imageView.tintColor = .systemBlue
         return imageView
     }()
 
@@ -30,15 +30,15 @@ class AddButton: UIButton {
     }
 
     private func commonInit() {
-        setupStyle()
         addSubviews()
         makeConstraints()
+        setupStyle()
     }
 
     private func setupStyle() {
         backgroundColor = .white
-        layer.cornerRadius = 16
-        layer.borderColor = UIColor.blue.cgColor
+        layer.cornerRadius = 21
+        layer.borderColor = UIColor.systemBlue.cgColor
         layer.borderWidth = 2
     }
 

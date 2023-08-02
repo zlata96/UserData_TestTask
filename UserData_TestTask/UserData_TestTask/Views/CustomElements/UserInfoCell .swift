@@ -19,6 +19,7 @@ class UserInfoCell: UICollectionViewCell {
     }
 
     private func commonInit() {
+        backgroundColor = .white
         addSubviews()
         makeConstraints()
     }

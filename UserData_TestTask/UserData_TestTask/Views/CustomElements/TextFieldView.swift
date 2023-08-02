@@ -15,7 +15,7 @@ class TextFieldView: UIView {
         textField.placeholder = placeholder
         textField.attributedPlaceholder = NSAttributedString(
             string: placeholder,
-            attributes: [.foregroundColor: UIColor.gray]
+            attributes: [.foregroundColor: UIColor.lightGray]
         )
         textField.textColor = .black
         textField.keyboardType = type
@@ -25,7 +25,7 @@ class TextFieldView: UIView {
     lazy var label: UILabel = {
         let label = UILabel()
         label.text = text
-        label.textColor = .gray
+        label.textColor = .lightGray
         label.font = .systemFont(ofSize: 12)
         return label
     }()
@@ -52,7 +52,7 @@ class TextFieldView: UIView {
 
     private func setupStyle() {
         layer.cornerRadius = 8
-        layer.borderColor = UIColor.gray.cgColor
+        layer.borderColor = UIColor.lightGray.cgColor
         layer.borderWidth = CGFloat(1)
     }
 

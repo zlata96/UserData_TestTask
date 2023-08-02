@@ -33,7 +33,7 @@ class ChildInfoCell: UICollectionViewCell {
     private var deleteButton: UIButton = {
         let button = UIButton()
         button.setTitle("Удалить", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
         button.contentMode = .topLeft
         return button
     }()
@@ -49,6 +49,7 @@ class ChildInfoCell: UICollectionViewCell {
     }
 
     private func commonInit() {
+        backgroundColor = .white
         addSubviews()
         makeConstraints()
         setupTargets()
@@ -63,7 +64,7 @@ class ChildInfoCell: UICollectionViewCell {
 
     private func makeConstraints() {
         stackView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(16)
+            $0.top.bottom.equalToSuperview().inset(16)
             $0.leading.equalToSuperview().offset(16)
             $0.width.equalTo(UIScreen.main.bounds.size.width / 2)
             $0.height.equalTo(140)

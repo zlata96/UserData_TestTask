@@ -16,7 +16,7 @@ class CategoryHeader: UICollectionReusableView {
     var addButtonDelegate: AddButtonDelegate?
     private var categoryNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 16, weight: .semibold)
         label.textColor = .black
         return label
     }()
@@ -58,7 +58,7 @@ class CategoryHeader: UICollectionReusableView {
         addButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(categoryNameLabel.snp.trailing).offset(16)
-            $0.height.equalTo(32)
+            $0.height.equalTo(42)
         }
     }
 
@@ -76,7 +76,7 @@ class CategoryHeader: UICollectionReusableView {
         addButton.isHidden = isButtonHidden
     }
 
-    func hideAddButton() {
-        addButton.isHidden = true
+    func hideAddButton(isHidden: Bool) {
+        addButton.isHidden = isHidden
     }
 }

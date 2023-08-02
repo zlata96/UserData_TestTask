@@ -21,6 +21,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view = contentView
         setupDelegates()
+        hideKeyboardWhenTappedAround()
     }
 
     func setupDelegates() {
@@ -100,7 +101,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
-        CGSize(width: collectionView.frame.width, height: 32)
+        CGSize(width: collectionView.frame.width, height: 48)
     }
 
     func collectionView(
@@ -110,6 +111,13 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         CGSize(width: collectionView.frame.width, height: 160)
     }
+
+    private func hideButtonInHeader(isHidden: Bool) {
+        let indexPath = IndexPath(row: 0, section: 1)
+        if let headerView = contentView.userInfoCollectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: indexPath) as? CategoryHeader {
+            headerView.hideAddButton(isHidden: isHidden)
+        }
+    }
 }
 
 // MARK: AddButtonDelegate
@@ -117,13 +125,10 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 extension ViewController: AddButtonDelegate {
     func addButtonPressed() {
         numberOfChild += 1
-        contentView.userInfoCollectionView.reloadData()
+        contentView.userInfoCollectionView.insertItems(at: [IndexPath(row: numberOfChild - 1, section: 1)])
         updateCollectionViewConctraints()
         if numberOfChild == 5 {
-            let indexPath = IndexPath(row: 0, section: 1)
-            if let headerView = contentView.userInfoCollectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: indexPath) as? CategoryHeader {
-                headerView.hideAddButton()
-            }
+            hideButtonInHeader(isHidden: true)
         }
     }
 }
@@ -133,9 +138,13 @@ extension ViewController: AddButtonDelegate {
 extension ViewController: DeleteButtonDelegate {
     func deleteButtonPressed() {
         if numberOfChild != 0 {
+            let indexPath = IndexPath(row: numberOfChild - 1, section: 1)
             numberOfChild -= 1
-            contentView.userInfoCollectionView.reloadData()
+            contentView.userInfoCollectionView.deleteItems(at: [indexPath])
             updateCollectionViewConctraints()
+        }
+        if numberOfChild != 5 {
+            hideButtonInHeader(isHidden: false)
         }
     }
 }
@@ -168,5 +177,17 @@ extension ViewController: ResetDataDelegate {
         }
         numberOfChild = 1
         contentView.userInfoCollectionView.reloadData()
+    }
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

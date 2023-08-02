@@ -70,21 +70,53 @@
 		CE064CD02A7427A900BEDDB2 /* UserData_TestTask */ = {
 			isa = PBXGroup;
 			children = (
-				CE064CD12A7427A900BEDDB2 /* AppDelegate.swift */,
-				CE064CD52A7427A900BEDDB2 /* ViewController.swift */,
-				CE064CE92A742C7900BEDDB2 /* UserInfoView.swift */,
-				CE083D4E2A74479D00C68495 /* UICollectionView + Extension.swift */,
-				CE083D462A743EEF00C68495 /* TextFieldView.swift */,
-				CE083D502A74482100C68495 /* UserInfoCell .swift */,
-				CE083D522A744B3600C68495 /* ChildInfoCell.swift */,
-				CE083D4A2A74409D00C68495 /* CategoryHeader.swift */,
-				CE083D4C2A74423900C68495 /* AddButton.swift */,
+				CE994F5B2A7A66B00019EA79 /* Extensions */,
+				CE994F5A2A7A669D0019EA79 /* Controllers */,
+				CE994F582A7A666A0019EA79 /* Views */,
 				CE064CD72A7427A900BEDDB2 /* Main.storyboard */,
 				CE064CDA2A7427AD00BEDDB2 /* Assets.xcassets */,
 				CE064CDC2A7427AD00BEDDB2 /* LaunchScreen.storyboard */,
+				CE064CD12A7427A900BEDDB2 /* AppDelegate.swift */,
 				CE064CDF2A7427AD00BEDDB2 /* Info.plist */,
 			);
 			path = UserData_TestTask;
+			sourceTree = "<group>";
+		};
+		CE994F582A7A666A0019EA79 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CE064CE92A742C7900BEDDB2 /* UserInfoView.swift */,
+				CE994F592A7A66820019EA79 /* CustomElements */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CE994F592A7A66820019EA79 /* CustomElements */ = {
+			isa = PBXGroup;
+			children = (
+				CE083D462A743EEF00C68495 /* TextFieldView.swift */,
+				CE083D502A74482100C68495 /* UserInfoCell .swift */,
+				CE083D4A2A74409D00C68495 /* CategoryHeader.swift */,
+				CE083D522A744B3600C68495 /* ChildInfoCell.swift */,
+				CE083D4C2A74423900C68495 /* AddButton.swift */,
+			);
+			path = CustomElements;
+			sourceTree = "<group>";
+		};
+		CE994F5A2A7A669D0019EA79 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CE064CD52A7427A900BEDDB2 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CE994F5B2A7A66B00019EA79 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CE083D4E2A74479D00C68495 /* UICollectionView + Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
